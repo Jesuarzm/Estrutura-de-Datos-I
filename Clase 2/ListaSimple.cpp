@@ -74,6 +74,8 @@ void mostrarDatos(lista cabeza){
     
 };
 
+
+
 int main(){
     
     lista List= NULL;
@@ -81,4 +83,5 @@ int main(){
     agregarFinal(List, "asdf", "Qwer", "asdf2", 2006, + 'm', "CArtago", 123497012);
     agregarFinal(List, "xczbzx", "Mizxcvranda", "Zambrasdfano", 1992, + 'm', "LIga", 12349034);
     agregarFinal(List, "oui", "nda", "Zambrano", 2001, + 'm', "lIMON", 12387);
+
 };
