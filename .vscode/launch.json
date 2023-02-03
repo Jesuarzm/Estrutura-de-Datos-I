@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/jesuar/Documentos/Estrutura-de-Datos-I/Clase 3.1",
-      "program": "/home/jesuar/Documentos/Estrutura-de-Datos-I/Clase 3.1/build/Debug/outDebug",
+      "cwd": "/home/jesuar/Documentos/Estrutura-de-Datos-I",
+      "program": "/home/jesuar/Documentos/Estrutura-de-Datos-I/build/Debug/outDebug",
       "MIMode": "lldb",
       "miDebuggerPath": "/usr/bin/lldb",
       "setupCommands": [
