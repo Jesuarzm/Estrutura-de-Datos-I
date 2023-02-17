@@ -155,19 +155,23 @@ void modificarLista(lista cabeza,int cod,int can)
 
 int main()
 {
+	bool estado = true;
 	lista LDC=NULL;
 	agregarFinal(LDC,"coca cola",101,4,1000);
 	agregarFinal(LDC,"fanta",102,4,1000);
 	agregarFinal(LDC,"pepsi",103,4,1000);
-	mostrarLista(LDC);
-	system("read -p '$*'");
-	borrarArticulo(LDC,103);
-	system("clear");
-	mostrarLista(LDC);
-	system("read -p '$*'");
-	modificarLista(LDC,102,8);
-	system("clear");
-	mostrarLista(LDC);
-	system("read -p '$*'");
+	
+	do
+	{
+		int opc = 0;	
+		cout << "Menu Opciones" << endl;
+
+		if(opc == 1)
+		{
+			
+		};
+		
+	} while (estado != false);
+	
 
 }
