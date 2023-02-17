@@ -85,6 +85,25 @@ void agregarInicio(lista &cabeza,string n,int cod,int mem,
 			
 	}
 };
+void modificarLista(lista cabeza,int cod,int mem)
+{
+	lista aux;
+	
+	if(cabeza==NULL)
+	cout <<"Lista vacia"<<endl;
+	else
+	{
+		aux=cabeza;
+		do
+		{
+			if(aux->codigoProceso==cod)
+			aux->memoriaProceso=mem;
+			
+			aux=aux->sig;
+		}
+		while(aux!=cabeza);
+	}
+}
 void mostrarLista(lista cabeza)
 {
 	lista aux;
@@ -106,7 +125,50 @@ void mostrarLista(lista cabeza)
 		while(aux!=cabeza);
 	}
 };
-
+void mostrarActivos(lista cabeza)
+{
+	lista aux;
+	
+	if(cabeza==NULL)
+	cout <<"Lista vacia"<<endl;
+	else
+	{
+		aux=cabeza;
+		do
+		{
+			if(aux->Estado=="ACTIVO"){
+			cout<<"Nombre:" <<aux->nombreProceso<<endl;
+			cout<<"Codigo:" <<aux->codigoProceso<<endl;
+			cout<<"Memoria:" <<aux->memoriaProceso<<endl;
+			cout<<"Estado:" <<aux->Estado<<endl;
+			cout <<"******************************"<<endl;
+			}
+			aux=aux->sig;
+		}while(aux!=cabeza);
+	}
+};
+void mostrarInactivos(lista cabeza)
+{
+	lista aux;
+	
+	if(cabeza==NULL)
+	cout <<"Lista vacia"<<endl;
+	else
+	{
+		aux=cabeza;
+		do
+		{
+			if(aux->Estado=="INACTIVO"){
+			cout<<"Nombre:" <<aux->nombreProceso<<endl;
+			cout<<"Codigo:" <<aux->codigoProceso<<endl;
+			cout<<"Memoria:" <<aux->memoriaProceso<<endl;
+			cout<<"Estado:" <<aux->Estado<<endl;
+			cout <<"******************************"<<endl;
+			}
+			aux=aux->sig;
+		}while(aux!=cabeza);
+	}
+};
 bool consultaMemoria(lista cabeza){
     lista aux;
     int memoria=0;
@@ -128,13 +190,58 @@ bool consultaMemoria(lista cabeza){
     }
     
 }
+void matarProceso(lista &cabeza, int cod)
+{
+	lista aux;
+	
+	if(cabeza==NULL)
+	cout <<"Lista vacia"<<endl;
+	else{
+		aux=cabeza;
+		if(aux->codigoProceso==cod){
+			cabeza=aux->sig;
+			cabeza->ant=aux->ant;
+			aux->ant->sig=cabeza;
+			aux->sig=NULL;
+			aux->ant=NULL;
+			free(aux);
+			aux=cabeza;
+		}
+		else{
+			aux=cabeza;
+			do{
+				if(aux->codigoProceso==cod && aux->sig!=cabeza){
+					aux->ant->sig=aux->sig;
+					aux->sig->ant=aux->ant;
+					aux->sig=NULL;
+					aux->ant=NULL;
+					free(aux);
+					aux=cabeza;
+				}
+				else{
+					if(aux->codigoProceso==cod && aux->sig==cabeza){
+					cabeza->ant=aux->ant;
+					aux->ant->sig=cabeza;
+					aux->sig=NULL;
+					aux->ant=NULL;
+					free(aux);
+					aux=cabeza;
+					}
+					aux=aux->sig;
+				}
+			}
+			while(aux!=cabeza);
+		}
+	}
+}
+
 int main()
 {
     bool estado = true;
 	lista milista=NULL;
 	agregarInicio(milista,"Chrome",1,100,"ACTIVO");
    
-	agregarInicio(milista,"Code",2,80,"ACTIVO");
+	agregarInicio(milista,"Code",2,80,"INACTIVO");
    
 	agregarFinal(milista,"Spotify",3,40,"ACTIVO");
    
@@ -149,8 +256,9 @@ int main()
         cout << "3: Modificar Proceso" << endl;
         cout << "4: Mostar Procesos Activos" << endl;
         cout << "5: Mostrar Proceos Inactivos" << endl;
+        cout << "6: Matar Proceso" << endl;
         
-        cout << "6: SALIR" << endl;
+        cout << "7: SALIR" << endl;
         
         cin >> opc;
 
@@ -205,8 +313,32 @@ int main()
             mostrarLista(milista);
             opc=0;
         }
-        
-        if (opc == 6)
+        if (opc == 3) {
+        	int idpro, modmem ;
+        	cout << "Ingrese el codigo de proceso a modificar:" << endl;
+        	cin >> idpro;
+        	cout << "Ingrese la cantidad de memoria a usar:" << endl;
+        	cin >> modmem;
+        	
+        	modificarLista(milista, idpro, modmem);
+        	opc=0;
+		}
+		if (opc == 4){
+			mostrarActivos(milista);
+			opc=0;
+		}
+		if (opc == 5){
+			mostrarInactivos(milista);
+			opc=0;
+		}
+		if (opc == 6){
+			int idpro ;
+        	cout << "Ingrese el codigo de proceso a matar:" << endl;
+        	cin >> idpro;
+        	matarProceso(milista,idpro);
+        	opc=0;
+		}
+        if (opc == 7)
         {
             estado = false;
         }
