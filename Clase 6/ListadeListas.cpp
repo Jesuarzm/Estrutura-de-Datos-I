@@ -164,6 +164,8 @@ int main(){
 	system("read -rp $'Press [Enter] to continue...\n' key");
 	
 	eliminarPais(Lista, "Argentina");
+
+	eliminarPais(Lista, "Panama");
 	eliminarPais(Lista, "Estados Unidos");
 
 	mostrarLista(Lista);
