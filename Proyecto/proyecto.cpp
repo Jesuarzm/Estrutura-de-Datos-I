@@ -318,10 +318,44 @@ int main(){
         cout << "*********************" << endl;
         cout << "11: SALIR" << endl;
         
+		cout << "\nOpcion:" << endl;
+        
         cin >> opc;
 
-		if (opc == 6)
-		{
+
+
+		if (opc == 1){
+			system("clear");
+			cout << "Opcion 1" << endl;
+			system("read -rp $'Press [Enter] to continue...\n' key");
+			
+		}
+		if (opc == 2){
+			system("clear");
+			cout << "Opcion 2" << endl;
+			system("read -rp $'Press [Enter] to continue...\n' key");
+			
+		}
+		if (opc == 3){
+			system("clear");
+			cout << "Opcion 3" << endl;
+			system("read -rp $'Press [Enter] to continue...\n' key");
+			
+		}
+		if (opc == 4){
+			system("clear");
+			cout << "Opcion 4" << endl;
+			system("read -rp $'Press [Enter] to continue...\n' key");
+			
+		}
+		if (opc == 5){
+			system("clear");
+			cout << "Opcion 5" << endl;
+			system("read -rp $'Press [Enter] to continue...\n' key");
+			
+		}
+
+		if (opc == 6){
 			system("clear");
 
 			cout << "Ingrese la provincia a imprimir" << endl;
@@ -333,6 +367,7 @@ int main(){
 			cout << "6: Limón" << endl;
 			cout << "7: Guanacaste" << endl;
 
+			
 			cin >> opcProv;
 			switch (opcProv){
 
@@ -340,49 +375,42 @@ int main(){
 				system("clear");
 				mostrarProvincia(Lista, "San José");
 				system("read -rp $'Press [Enter] to continue...\n' key");
-				opc = 0;
 				opcProv = 0;
 				break;
 			case 2:
 				system("clear");
 				mostrarProvincia(Lista, "Alajuela");
 				system("read -rp $'Press [Enter] to continue...\n' key");
-				opc = 0;
 				opcProv = 0;
 				break;
 			case 3:
 				system("clear");
 				mostrarProvincia(Lista, "Cartago");
 				system("read -rp $'Press [Enter] to continue...\n' key");
-				opc = 0;
 				opcProv = 0;
 				break;
 			case 4:
 				system("clear");
 				mostrarProvincia(Lista, "Heredia");
 				system("read -rp $'Press [Enter] to continue...\n' key");
-				opc = 0;
 				opcProv = 0;
 				break;
 			case 5:
 				system("clear");
 				mostrarProvincia(Lista, "Puntarenas");
 				system("read -rp $'Press [Enter] to continue...\n' key");
-				opc = 0;
 				opcProv = 0;
 				break;
 			case 6:
 				system("clear");
 				mostrarProvincia(Lista, "Limón");
 				system("read -rp $'Press [Enter] to continue...\n' key");
-				opc = 0;
 				opcProv = 0;
 				break;
 			case 7:
 				system("clear");
 				mostrarProvincia(Lista, "Guanacaste");
 				system("read -rp $'Press [Enter] to continue...\n' key");
-				opc = 0;
 				opcProv = 0;
 				break;
 			}
@@ -423,16 +451,14 @@ int main(){
 		if (opc == 11)
 		{
 			estado = false;
-		}/*
-		if (opc != 1 or 2 or 3 or 4 
-		or 5 or 6 or 7 or 8 or 9 or 10){
+		}
+		if (!(opc > 0 and opc < 12)){
 			system("clear");
 			cout << "Ingresar una opcion valida:" << endl;
+			system("read -rp $'Press [Enter] to continue...\n' key");
 			opc = 0;
-		}*/
+		}
 		
-		letraIn = ' ';
-		prov = "";
 	}while (estado == true);
 	
 };
