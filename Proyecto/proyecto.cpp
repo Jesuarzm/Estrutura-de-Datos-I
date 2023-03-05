@@ -102,28 +102,62 @@ int tel, int cel, int ofi, int ced, string co,string prov){
 		
 	}
 }
-void mostrarLista(lista cabeza){
+void mostrarProvincia(lista cabeza, string prov){
 	lista aux;
 	nodoUsuario *auxUsr;
 	if(cabeza ==NULL){
 		cout << "Lista Vacia" << endl;
 	}else{
 		aux=cabeza;
+		cout << "++++++++++++++++" << endl;
+		cout << "Provincia: " << prov << endl;
+		cout << "++++++++++++++++" << endl;
 		while (aux!=NULL){	
-			cout << "++++++++++++++++" << endl;
-			cout << "Letra: " << aux->letra << endl;
 			if (aux->sigUsuario!=NULL)
 			{
 				auxUsr=aux->sigUsuario;
 				while (auxUsr!=NULL)
 				{
+					if (auxUsr->provincia == prov){
 					cout << "Nombre: " << auxUsr->nombre << endl;
                     cout << "Apellidos: " << auxUsr->primerApellido << " "<< auxUsr->segundoApellido << endl;
                     cout << "Telefonos: " << auxUsr->telefono << endl;
                     cout << "Correo: " << auxUsr->correo << endl;
                     cout << "Provincia: " << auxUsr->provincia << endl;
-
 					cout << "++++++++++++++++" << endl;
+					}
+					auxUsr=auxUsr->sig;
+				}
+				
+			}
+			aux=aux->sig;
+		}
+		
+	}
+};
+void mostrarLetra(lista cabeza, char letra){
+	lista aux;
+	nodoUsuario *auxUsr;
+	if(cabeza ==NULL){
+		cout << "Lista Vacia" << endl;
+	}else{
+		aux=cabeza;
+		cout << "++++++++++++++++" << endl;
+		cout << "Letra: " << letra << endl;
+		cout << "++++++++++++++++" << endl;
+		while (aux!=NULL){	
+			if (aux->sigUsuario!=NULL){
+				auxUsr=aux->sigUsuario;
+				while (auxUsr!=NULL){
+
+					if (auxUsr->primerApellido[0]==letra){
+					cout << "Nombre: " << auxUsr->nombre << endl;
+                    cout << "Apellidos: " << auxUsr->primerApellido << " "<< auxUsr->segundoApellido << endl;
+                    cout << "Telefonos: " << auxUsr->telefono << endl;
+                    cout << "Correo: " << auxUsr->correo << endl;
+                    cout << "Provincia: " << auxUsr->provincia << endl;
+					cout << "++++++++++++++++" << endl;
+					}
 					auxUsr=auxUsr->sig;
 				}
 				
@@ -257,7 +291,7 @@ int main(){
 	ingresarAbc(Lista, 'Z');
 
     ingresarUsuario(Lista, "Jesuar", "Miranda", "Zambrano", 84092380,
-    84092380 , 84092380, 82558001, "jesuarzambrano@hotmail.com", "CHepe");
+    84092380 , 84092380, 82558001, "jesuarzambrano@hotmail.com", "San José");
 
 	
 	
@@ -265,6 +299,7 @@ int main(){
 		char letraIn;
 		string prov;
         int opc = 0;
+		int opcProv=0;
 		system("clear");
         cout << "Menu:" << endl;
         cout << "****** Contactos *****" << endl;
@@ -276,21 +311,99 @@ int main(){
         cout << "5: Por cedula" << endl;
         cout << "****** Reportes *****" << endl;
         cout << "6: Por Provincia" << endl;
-        cout << "7: Contactos Registrados" << endl;
-        cout << "8: Cantidad por provincia" << endl;
-        cout << "9: Cantidad por inicial" << endl;
+		cout << "7: Por Inicial" << endl;
+        cout << "8: Contactos Registrados" << endl;
+        cout << "9: Cantidad por provincia" << endl;
+        cout << "10: Cantidad por inicial" << endl;
         cout << "*********************" << endl;
-        cout << "10: SALIR" << endl;
+        cout << "11: SALIR" << endl;
         
         cin >> opc;
 
+		if (opc == 6)
+		{
+			system("clear");
+
+			cout << "Ingrese la provincia a imprimir" << endl;
+			cout << "1: San José" << endl;
+			cout << "2: Alajuela" << endl;
+			cout << "3: Cartago" << endl;
+			cout << "4: Heredia" << endl;
+			cout << "5: Puntarenas" << endl;
+			cout << "6: Limón" << endl;
+			cout << "7: Guanacaste" << endl;
+
+			cin >> opcProv;
+			switch (opcProv){
+
+			case 1:
+				system("clear");
+				mostrarProvincia(Lista, "San José");
+				system("read -rp $'Press [Enter] to continue...\n' key");
+				opc = 0;
+				opcProv = 0;
+				break;
+			case 2:
+				system("clear");
+				mostrarProvincia(Lista, "Alajuela");
+				system("read -rp $'Press [Enter] to continue...\n' key");
+				opc = 0;
+				opcProv = 0;
+				break;
+			case 3:
+				system("clear");
+				mostrarProvincia(Lista, "Cartago");
+				system("read -rp $'Press [Enter] to continue...\n' key");
+				opc = 0;
+				opcProv = 0;
+				break;
+			case 4:
+				system("clear");
+				mostrarProvincia(Lista, "Heredia");
+				system("read -rp $'Press [Enter] to continue...\n' key");
+				opc = 0;
+				opcProv = 0;
+				break;
+			case 5:
+				system("clear");
+				mostrarProvincia(Lista, "Puntarenas");
+				system("read -rp $'Press [Enter] to continue...\n' key");
+				opc = 0;
+				opcProv = 0;
+				break;
+			case 6:
+				system("clear");
+				mostrarProvincia(Lista, "Limón");
+				system("read -rp $'Press [Enter] to continue...\n' key");
+				opc = 0;
+				opcProv = 0;
+				break;
+			case 7:
+				system("clear");
+				mostrarProvincia(Lista, "Guanacaste");
+				system("read -rp $'Press [Enter] to continue...\n' key");
+				opc = 0;
+				opcProv = 0;
+				break;
+			}
+		}
+		
 		if (opc == 7){
+			system("clear");
+			cout << "Ingrese la inicial de nombres a imprimir:" << endl;
+			cin >> letraIn;
+			mostrarLetra(Lista, letraIn);
+			system("read -rp $'Press [Enter] to continue...\n' key");
+			opc = 0;
+		}
+		
+		if (opc == 8){
 			system("clear");
 			contarContatos(Lista);
 			system("read -rp $'Press [Enter] to continue...\n' key");
 			opc = 0;
 		}
-		if (opc == 8){
+		if (opc == 9){
 			system("clear");
 			cout << "Ingresa la provincia a contar" << endl;
 			cin >> prov;
@@ -298,7 +411,7 @@ int main(){
 			system("read -rp $'Press [Enter] to continue...\n' key");
 			opc = 0;
 		}
-		if (opc == 9){
+		if (opc == 10){
 			system("clear");
 			cout << "Ingresa la letra a contar" << endl;
 			cin >> letraIn;
@@ -307,7 +420,7 @@ int main(){
 			opc = 0;
 		}
 		
-		if (opc == 10)
+		if (opc == 11)
 		{
 			estado = false;
 		}/*
@@ -318,7 +431,8 @@ int main(){
 			opc = 0;
 		}*/
 		
-		
+		letraIn = ' ';
+		prov = "";
 	}while (estado == true);
 	
 };
