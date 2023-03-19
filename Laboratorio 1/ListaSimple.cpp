@@ -32,9 +32,10 @@ nodoPersona *crearNodo(string n, string ap1, string ap2, int aNac, char g, strin
     aux->siguiente=NULL;
     return aux;
 };
-void agregarFinal(lista &cabeza, string n, string ap1, string ap2, int aNac, char g, string pro, int ced, int ed){
+void agregarFinal(lista &cabeza, string n, string ap1, string ap2, int aNac, char g, string pro, int ced){
 
     nodoPersona *nuevo;
+    int ed = 2023 - aNac;
     nuevo=crearNodo(n,ap1,ap2,aNac,g,pro,ced, ed);
     lista aux;
     if (cabeza == NULL)
@@ -45,6 +46,7 @@ void agregarFinal(lista &cabeza, string n, string ap1, string ap2, int aNac, cha
 
             while (aux->siguiente!=NULL)
             aux=aux->siguiente;
+
         aux->siguiente=nuevo;
 
     }
@@ -70,21 +72,127 @@ void modificarLista(lista cabeza,int ced, int ned){
 }
 void mostrarEdades(lista cabeza,int ed){
 	lista aux;
-	int cont=0;
-	if(cabeza==NULL)
-	cout <<"Lista vacia"<<endl;
-	else
-	{
-		aux=cabeza;
-		do
-		{
-			if((2023 - aux->edad)==ed){
+    int cont = 0;
+    if (cabeza == NULL)
+    {
+        cout << "Lista Vacias" << endl;
+    }
+    else{
+        aux=cabeza;
+        while (aux!=NULL)
+        {
+            if (aux->edad==ed)
+            {
                 cont++;
-            }			
-			aux=aux->siguiente;
-		}
-		while(aux!=cabeza);
-	}
+            }
+            aux=aux->siguiente;
+        }
+        cout << "Hay " << cont 
+        << " personas con la edad ingresada."<<endl;
+    }
+}
+void contarPersonas(lista cabeza){
+	lista aux;
+    int cont = 0;
+    if (cabeza == NULL)
+    {
+        cout << "Lista Vacias" << endl;
+    }
+    else{
+        aux=cabeza;
+        while (aux!=NULL)
+        {
+            if (aux->siguiente!=cabeza)
+            {
+                cont++;
+            }
+            aux=aux->siguiente;
+        }
+        cout << "Hay " << cont 
+        << " personas."<<endl;
+    }
+}
+void promedioEdad(lista cabeza){
+	lista aux;
+    int cont = 0, prom = 0;
+    if (cabeza == NULL)
+    {
+        cout << "Lista Vacias" << endl;
+    }
+    else{
+        aux=cabeza;
+        while (aux!=NULL)
+        {
+            if (aux->siguiente!=cabeza)
+            {
+                cont++;
+                prom+=aux->edad;
+            }
+            aux=aux->siguiente;
+        }
+        prom/=cont;
+        cout << "El promedio de edad es: " << prom 
+        <<endl;
+    }
+}
+void personaProvincia(lista cabeza){
+	lista aux;
+    int cont = 0;
+    int sj=0, ala=0, cart=0, her=0, lim=0, punt=0, guan=0;
+    if (cabeza == NULL)
+    {
+        cout << "Lista Vacias" << endl;
+    }
+    else{
+        aux=cabeza;
+        while (aux!=NULL)
+        {
+            if (aux->provincia=="San Jose")
+            {
+                cont++;
+                sj++;
+            }
+            if (aux->provincia=="Alajuela")
+            {
+                cont++;
+                ala++;
+            }
+            if (aux->provincia=="Heredia")
+            {
+                cont++;
+                her++;
+            }
+            if (aux->provincia=="Cartago")
+            {
+                cont++;
+                cart++;
+            }
+            if (aux->provincia=="Puntarenas")
+            {
+                cont++;
+                punt++;
+            }
+            if (aux->provincia=="Limon")
+            {
+                cont++;
+                lim++;
+            }
+            if (aux->provincia=="Guanacasate")
+            {
+                cont++;
+                guan++;
+            }
+            aux=aux->siguiente;
+        }
+        
+        cout << "Las perseonas de San Jose son: " << sj <<endl;
+        cout << "Las perseonas de Alajuela son: " << ala <<endl;
+        cout << "Las perseonas de Heredia son: " << her <<endl;
+        cout << "Las perseonas de Cartago son: " << cart <<endl;
+        cout << "Las perseonas de Puntarenas son: " << punt <<endl;
+        cout << "Las perseonas de Limon son: " << lim <<endl;
+        cout << "Las perseonas de Guanacaste son: " << guan <<endl;
+    }
 }
 void mostrarDatos(lista cabeza){
     lista aux;
@@ -103,7 +211,7 @@ void mostrarDatos(lista cabeza){
             cout << "Genero: " << aux->genero<<endl;
             cout << "Provincia: " << aux->provincia<<endl;
             cout << "Cedula" << aux->cedula<<endl;
-            cout << "Edad: " << 2023 - aux->edad << endl;
+            cout << "Edad: " << aux->edad << endl;
             cout << "**********************************************" <<endl;
             aux=aux->siguiente;
         }
@@ -118,14 +226,16 @@ int main(){
     
     int edad;
     lista List= NULL;
-    agregarFinal(List, "Jesuar", "Miranda", "Zambrano", 2001, + 'm', "Chepe", 2345234, 2011);
-    agregarFinal(List, "asdf", "Qwer", "asdf2", 2006, + 'm', "CArtago", 123497012, 2001);
-    agregarFinal(List, "xczbzx", "Mizxcvranda", "Zambrasdfano", 1992, + 'm', "LIga", 12349034, 1990);
-    agregarFinal(List, "oui", "nda", "Zambrano", 2001, + 'm', "lIMON", 12387, 1980);
+    agregarFinal(List, "Jesuar", "Miranda", "Zambrano", 2001, + 'm', "San Jose", 2345234);
+    agregarFinal(List, "asdf", "Qwer", "asdf2", 2006, + 'm', "Cartago", 123497012);
+    agregarFinal(List, "xczbzx", "Mizxcvranda", "Zambrasdfano", 1992, + 'm', "Alajuela", 12349034);
+    agregarFinal(List, "oui", "nda", "Zambrano", 2001, + 'm', "Limon", 12387);
     mostrarDatos(List);
 
     cout << "Por favor, ingrese la edad a busca:" << endl;
     cin >> edad;
     mostrarEdades(List, edad);
-
+    contarPersonas(List);
+    promedioEdad(List);
+    personaProvincia(List);
 };
