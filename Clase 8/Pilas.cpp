@@ -107,11 +107,11 @@ int main()
 	Mostrar(Pila);
 	system("Pause");
 	ContarParesImpares(Pila);
-	/*cout <<"Memoria procesada:"<<Sacar(Pila)->memoria<<endl;
+	cout <<"Memoria procesada:"<<Sacar(Pila)->memoria<<endl;
 	Mostrar(Pila);
 	system("Pause");
 	cout <<"Memoria procesada:"<<Sacar(Pila)->memoria<<endl;
 	Mostrar(Pila);
-	system("Pause");*/
+	system("Pause");
 	
 }
