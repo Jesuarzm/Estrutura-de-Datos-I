@@ -48,28 +48,30 @@ void agregarPersona(listaPersonas &cab,int id, string name)
 	cab=nuevo;
 	else
 	{
+		nuevo->sig=cab;
+		cab=nuevo;
+	}
+    
+}
+void agregarHabitacion(listaHabitaciones &cab, int id, string size)
+{
+	listaHabitaciones aux;
+	nodoHabitaciones *nuevo;
+	nuevo=crearHabitacion(id, size);
+	
+	
+	if(cab==NULL)
+	cab=nuevo;
+	else
+	{
 		aux=cab;
 		while(aux->sig!=NULL)
 		aux=aux->sig;
 		
 		aux->sig=nuevo;
 	}
-    
 }
-void agregarHabitacion(listaHabitaciones &cab, int id, string size)
-{
-	nodoHabitaciones *nuevo;
-	nuevo=crearHabitacion(id, size);
-	
-	if(cab==NULL)
-	cab=nuevo;
-	else
-	{
-		nuevo->sig=cab;
-		cab=nuevo;
-	}
-}
-nodoHabitaciones *SacarHabitacion(listaHabitaciones &cab)
+nodoHabitaciones *ocuparHabitacion(listaHabitaciones &cab, int id)
 {
 	nodoHabitaciones *aux;
 	
@@ -80,10 +82,14 @@ nodoHabitaciones *SacarHabitacion(listaHabitaciones &cab)
 	}
 	else
 	{
-		aux=cab;
-		cab=cab->sig;
-		aux->sig=NULL;
+		if (cab->idHabitacion == id)
+		{
+			aux=cab;
+			cab=cab->sig;
+			aux->sig=NULL;
+		}
 		return aux;
+		
 	}
 }
 void MostrarP(listaPersonas cab)
@@ -117,7 +123,7 @@ void MostrarH(listaHabitaciones cab)
 		{
 			cout <<"\nHabitacion: "<<aux->idHabitacion << endl;
             cout <<"Tamaño: "<<aux->tamano << endl;
-            cout <<"---------------------->";  
+            cout <<"---------------------->" << endl;  
 			aux=aux->sig;
 		}
 	}
@@ -166,7 +172,7 @@ int main()
 		}
         if (opc == 3){
 			system("clear");
-            SacarHabitacion(habitaciones)->idHabitacion;
+            ocuparHabitacion(habitaciones,520);
 			system("read -rp $'Press [Enter] to continue...\n' key");
 			
 		}
