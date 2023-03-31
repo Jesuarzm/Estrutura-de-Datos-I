@@ -92,52 +92,74 @@ void agregarHabitacion(listaHabitaciones &cab, int id, string size, int price)
 		aux->sig=nuevo;
 	}
 }
-void desocuparHabitacion(listaLlegadas &cab, int id, string size, int price)
-{
-	listaLlegadas aux;
-	nodoLlegadas *nuevo;
-	nuevo=crearReserva(id, size, price);
-	
-	
-	if(cab==NULL)
-	cab=nuevo;
-	else
-	{
-		aux=cab;
-		while(aux->sig!=NULL)
-		aux=aux->sig;
-		
-		aux->sig=nuevo;
-	}
-}
-listaLlegadas llegada = NULL;
-nodoHabitaciones *ocuparHabitacion(listaHabitaciones &cab){
+nodoHabitaciones *ocuparHabitacion(listaHabitaciones &cab, listaLlegadas &cab2){
 
 	nodoHabitaciones *aux;
-	
+	listaLlegadas auxHab;
+	nodoLlegadas *nuevo;
+
 	if(cab==NULL)
 	{
-	 cout <<"Cola vacia"<<endl;
+	 cout <<"Ninguna habitacion"<<endl;
 	 return NULL;
 	}
 	else
 	{
 		aux=cab;
-		desocuparHabitacion(llegada, aux->idHabitacion, aux->tamano, aux->precio);
+		cab=cab->sig;
+		aux->sig=NULL;
+
+	}
+	nuevo=crearReserva(aux->idHabitacion, aux->tamano, aux->precio);
+	if(cab2==NULL)
+	cab2=nuevo;
+	else
+	{
+		auxHab=cab2;
+		while(auxHab->sig!=NULL)
+		auxHab=auxHab->sig;
+		
+		auxHab->sig=nuevo;
+	}
+	return aux;
+}
+nodoLlegadas *desocuparHabitacion(listaLlegadas &cab, listaHabitaciones &cab2){
+
+	nodoLlegadas *aux;
+	listaHabitaciones auxHab;
+	nodoHabitaciones *nuevo;
+	if(cab==NULL)
+	{
+	 cout <<"No hay habitaciones ocupadas"<<endl;
+	 return NULL;
+	}
+	else
+	{
+		aux=cab;
 		cab=cab->sig;
 		aux->sig=NULL;
 		return aux;
-
 	}
-	
-}
 
+	nuevo=crearHabitacion(aux->idHabitacion, aux->tamano, aux->precio);
+	if(cab2==NULL)
+	cab2=nuevo;
+	else
+	{
+		auxHab=cab2;
+		while(auxHab->sig!=NULL)
+		auxHab=auxHab->sig;
+		
+		auxHab->sig=nuevo;
+	}
+	return aux;
+}
 void MostrarP(listaPersonas cab)
 {
 	listaPersonas aux;
 	
 	if(cab==NULL)
-	cout <<"Lista vaica"<<endl;
+	cout <<"Sin clientes registrados"<<endl;
 	else
 	{
 		aux=cab;
@@ -145,6 +167,7 @@ void MostrarP(listaPersonas cab)
 		{
 			cout <<"Id: "<<aux->idPersona<<endl;
 			cout <<"Nombre: "<<aux->nombre<<endl;
+			cout <<"Correo: "<<aux->correo<<endl;
 			cout <<"------------------------------"<<endl;
 			aux=aux->sig;
 		}
@@ -155,11 +178,13 @@ void MostrarH(listaHabitaciones cab)
 	listaHabitaciones aux;
 	
 	if(cab==NULL)
-	cout <<"Lista vaica"<<endl;
+	cout <<"Todas la habitaciones llenas"<<endl;
 	else
 	{
 		aux=cab;
-		cout << "<---------------------->" << endl;  
+		cout << "<---------Habitacion a usar------------->" << endl;
+		cout << "<---------|||||||||||||||||------------->" << endl;
+		cout << "<---------vvvvvvvvvvvvvvvvv------------->" << endl;  
         while(aux!=NULL)
 		{
 			cout << "Habitacion: " << aux->idHabitacion << endl;
@@ -170,13 +195,12 @@ void MostrarH(listaHabitaciones cab)
 		}
 	}
 }
-void MostrarHOcup()
+void MostrarHOcup(listaLlegadas cab)
 {
-	listaLlegadas cab=llegada;
 	listaLlegadas aux;
 	
 	if(cab==NULL)
-	cout <<"Lista vaica"<<endl;
+	cout <<"Todas la habitaciones desocupadas"<<endl;
 	else
 	{
 		aux=cab;
@@ -198,6 +222,8 @@ int main()
 
 	listaPersonas personas=NULL;
     listaHabitaciones habitaciones=NULL;
+	listaLlegadas llegadas = NULL;
+
 	agregarPersona(personas,1,"Jesuar", "jzm@gmai.com");
 	agregarPersona(personas,2,"Ash", "ash@gmail.com");
     agregarHabitacion(habitaciones,517,"Grande", 1000);
@@ -274,20 +300,18 @@ int main()
 			cout << "Habitaciones disponibles: " << endl;
             MostrarH(habitaciones);
 			system("read -rp $'Press [Enter] to continue...\n' key");
-
-			system("clear");
-			cout << "Indicar numero habitacion a usar" << endl;
-			cin >> idHab;
 			
-            ocuparHabitacion(habitaciones);
+            ocuparHabitacion(habitaciones, llegadas);
+
 
 			opc = 0;
 		}
 		if (opc == 7){
 			system("clear");
-			MostrarHOcup;
+			MostrarHOcup(llegadas);
 			system("read -rp $'Press [Enter] to continue...\n' key");
 
+			desocuparHabitacion(llegadas, habitaciones);
 		}
 		
 		
