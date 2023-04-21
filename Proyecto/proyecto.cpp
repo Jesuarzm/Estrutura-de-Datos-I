@@ -102,6 +102,66 @@ int tel, int cel, int ofi, int ced, string co,string prov){
 		
 	}
 }
+void eliminarUsuario(lista cabeza, int cel){
+	lista aux;
+	nodoUsuario *auxUsr;
+	if(cabeza ==NULL){
+		cout << "Lista Vacia" << endl;
+	}else{
+		aux=cabeza;
+		while (aux!=NULL){	
+			if (aux->sigUsuario!=NULL)
+			{
+				auxUsr=aux->sigUsuario;
+				while (auxUsr!=NULL)
+				{
+					if (auxUsr->celular==cel)
+					{
+						aux->sigUsuario=NULL;
+						free(auxUsr);
+					}
+					
+					auxUsr=auxUsr->sig;
+				}
+				
+			}
+			aux=aux->sig;
+		}
+		
+	}
+};
+void modificarUsuario(lista cabeza, int ced, string nombre, string apellido1, string apellido2 ,int tel, int cel, int ofi){
+	lista aux;
+	nodoUsuario *auxUsr;
+	if(cabeza ==NULL){
+		cout << "Lista Vacia" << endl;
+	}else{
+		aux=cabeza;
+		while (aux!=NULL){	
+			if (aux->sigUsuario!=NULL)
+			{
+				auxUsr=aux->sigUsuario;
+				while (auxUsr!=NULL)
+				{
+					if (auxUsr->cedula==ced)
+					{
+						auxUsr->nombre=nombre;
+						auxUsr->primerApellido=apellido1;
+						auxUsr->segundoApellido=apellido2;
+						auxUsr->celular=cel;
+						auxUsr->oficina=ofi;
+						auxUsr->telefono=tel;
+					}
+					
+					auxUsr=auxUsr->sig;
+				}
+				
+			}
+			aux=aux->sig;
+		}
+		
+	}
+};
 void mostrarProvincia(lista cabeza, string prov){
 	lista aux;
 	nodoUsuario *auxUsr;
@@ -151,6 +211,64 @@ void mostrarLetra(lista cabeza, char letra){
 				while (auxUsr!=NULL){
 
 					if (auxUsr->primerApellido[0]==letra){
+					cout << "Nombre: " << auxUsr->nombre << endl;
+                    cout << "Apellidos: " << auxUsr->primerApellido << " "<< auxUsr->segundoApellido << endl;
+                    cout << "Telefonos: " << auxUsr->telefono << endl;
+                    cout << "Correo: " << auxUsr->correo << endl;
+                    cout << "Provincia: " << auxUsr->provincia << endl;
+					cout << "++++++++++++++++" << endl;
+					}
+					auxUsr=auxUsr->sig;
+				}
+				
+			}
+			aux=aux->sig;
+		}
+		
+	}
+};
+void buscarNumero(lista cabeza, int num){
+	lista aux;
+	nodoUsuario *auxUsr;
+	if(cabeza ==NULL){
+		cout << "No hay numero registrado con: "<< num << endl;
+	}else{
+		aux=cabeza;
+		while (aux!=NULL){	
+			if (aux->sigUsuario!=NULL){
+				auxUsr=aux->sigUsuario;
+				while (auxUsr!=NULL){
+
+					if (auxUsr->celular==num){
+					cout << "Nombre: " << auxUsr->nombre << endl;
+                    cout << "Apellidos: " << auxUsr->primerApellido << " "<< auxUsr->segundoApellido << endl;
+                    cout << "Telefonos: " << auxUsr->telefono << endl;
+                    cout << "Correo: " << auxUsr->correo << endl;
+                    cout << "Provincia: " << auxUsr->provincia << endl;
+					cout << "++++++++++++++++" << endl;
+					}
+					auxUsr=auxUsr->sig;
+				}
+				
+			}
+			aux=aux->sig;
+		}
+		
+	}
+};
+void buscarCedula(lista cabeza, int ced){
+	lista aux;
+	nodoUsuario *auxUsr;
+	if(cabeza ==NULL){
+		cout << "No hay numero registrado con: "<< ced << endl;
+	}else{
+		aux=cabeza;
+		while (aux!=NULL){	
+			if (aux->sigUsuario!=NULL){
+				auxUsr=aux->sigUsuario;
+				while (auxUsr!=NULL){
+
+					if (auxUsr->cedula==ced){
 					cout << "Nombre: " << auxUsr->nombre << endl;
                     cout << "Apellidos: " << auxUsr->primerApellido << " "<< auxUsr->segundoApellido << endl;
                     cout << "Telefonos: " << auxUsr->telefono << endl;
@@ -291,13 +409,19 @@ int main(){
 	ingresarAbc(Lista, 'Z');
 
     ingresarUsuario(Lista, "Jesuar", "Miranda", "Zambrano", 84092380,
-    84092380 , 84092380, 82558001, "jesuarzambrano@hotmail.com", "San José");
+    84092380 , 84092380, 822558001, "jesuarzambrano@hotmail.com", "San José");
 
 	
 	
 	do{
 		char letraIn;
 		string prov;
+		string nombre, apl1,apl2,mail;
+		int cel=0;
+		int ofi=0;
+		int tel=0;
+		int ced=0;
+		int num=0;
         int opc = 0;
 		int opcProv=0;
 		system("clear");
@@ -326,31 +450,106 @@ int main(){
 
 		if (opc == 1){
 			system("clear");
-			cout << "Opcion 1" << endl;
+			cout << "Ingrese el nuevo nombre" << endl;
+			cin >> nombre;
+			cout << "Ingrese el primer apellido" << endl;
+			cin >> apl1;
+			cout << "Ingrese el segundo apellido" << endl;
+			cin >> apl2;
+			cout << "Ingrese el telefono" << endl;
+			cin >> tel;
+			cout << "Ingrese el celular" << endl;
+			cin >> cel;
+			cout << "Ingrese el correo electronico" << endl;
+			cin >> mail;
+			cout << "Seleccione el numero de provincia" << endl;
+			cout << "1: San José" << endl;	
+			cout << "2: Alajuela" << endl;
+			cout << "3: Cartago" << endl;
+			cout << "4: Heredia" << endl;
+			cout << "5: Puntarenas" << endl;
+			cout << "6: Limón" << endl;
+			cout << "7: Guanacaste" << endl;
+
+			
+			cin >> opcProv;
+			switch (opcProv){
+
+			case 1:
+				prov="San José";
+				opcProv = 0;
+				break;
+			case 2:
+				prov="Alajuela";
+				opcProv = 0;
+				break;
+			case 3:
+				prov="Cartago";
+				opcProv = 0;
+				break;
+			case 4:
+				prov="Heredia";
+				opcProv = 0;
+				break;
+			case 5:
+				prov="Puntarenas";
+				opcProv = 0;
+				break;
+			case 6:
+				prov="Limón";
+				opcProv = 0;
+				break;
+			case 7:
+				prov="Guanacaste";
+				opcProv = 0;
+				break;
+			}
+			ingresarUsuario(Lista,nombre,apl1,apl2,tel, cel, ofi, ced, mail, prov);
 			system("read -rp $'Press [Enter] to continue...\n' key");
 			
 		}
 		if (opc == 2){
 			system("clear");
-			cout << "Opcion 2" << endl;
+			cout << "Ingrese el numero de celular a eliminar" << endl;
+			cin >> cel;
+			eliminarUsuario(Lista, cel);
 			system("read -rp $'Press [Enter] to continue...\n' key");
 			
 		}
 		if (opc == 3){
 			system("clear");
-			cout << "Opcion 3" << endl;
+			cout << "Ingrese el numero de cedula del usuario a modificar" << endl;
+			cin >> ced;
+			cout << "Ingrese el nuevo nombre de usuario" << endl;
+			cin >> nombre;
+			cout << "Ingrese el nuevo apellido paterno" << endl;
+			cin >> apl1;
+			cout << "Ingrese el nuevo apellido materno" << endl;
+			cin>> apl2;
+			cout << "Ingrese el nuevo numero de celular" << endl;
+			cin >> cel;
+			cout << "Ingrese el nuevo numero de oficina" << endl;
+			cin >> ofi;
+			cout << "Ingrese el nuevo numero de telefono" << endl;
+			cin >> tel;
+			
+			modificarUsuario(Lista, ced, nombre, apl1, apl2, tel, cel,ofi);
 			system("read -rp $'Press [Enter] to continue...\n' key");
 			
 		}
 		if (opc == 4){
 			system("clear");
-			cout << "Opcion 4" << endl;
+			cout << "Ingrese el numero de telefono a buscar" << endl;
+			cin >> num;
+			buscarNumero(Lista, num);
 			system("read -rp $'Press [Enter] to continue...\n' key");
 			
 		}
 		if (opc == 5){
 			system("clear");
-			cout << "Opcion 5" << endl;
+			cout << "Ingrese el numero de cedula a buscar" << endl;
+			cin >> ced;
+			buscarCedula(Lista, ced);
 			system("read -rp $'Press [Enter] to continue...\n' key");
 			
 		}
@@ -433,10 +632,64 @@ int main(){
 		}
 		if (opc == 9){
 			system("clear");
-			cout << "Ingresa la provincia a contar" << endl;
-			cin >> prov;
-			contarProvincia(Lista, prov);
-			system("read -rp $'Press [Enter] to continue...\n' key");
+			
+			cout << "Ingrese la provincia a imprimir" << endl;
+			cout << "1: San José" << endl;
+			cout << "2: Alajuela" << endl;
+			cout << "3: Cartago" << endl;
+			cout << "4: Heredia" << endl;
+			cout << "5: Puntarenas" << endl;
+			cout << "6: Limón" << endl;
+			cout << "7: Guanacaste" << endl;
+
+			
+			cin >> opcProv;
+			switch (opcProv){
+
+			case 1:
+				system("clear");
+				contarProvincia(Lista, "San José");
+				system("read -rp $'Press [Enter] to continue...\n' key");
+				opcProv = 0;
+				break;
+			case 2:
+				system("clear");
+				contarProvincia(Lista, "Alajuela");
+				system("read -rp $'Press [Enter] to continue...\n' key");
+				opcProv = 0;
+				break;
+			case 3:
+				system("clear");
+				contarProvincia(Lista, "Cartago");
+				system("read -rp $'Press [Enter] to continue...\n' key");
+				opcProv = 0;
+				break;
+			case 4:
+				system("clear");
+				contarProvincia(Lista, "Heredia");
+				system("read -rp $'Press [Enter] to continue...\n' key");
+				opcProv = 0;
+				break;
+			case 5:
+				system("clear");
+				contarProvincia(Lista, "Puntarenas");
+				system("read -rp $'Press [Enter] to continue...\n' key");
+				opcProv = 0;
+				break;
+			case 6:
+				system("clear");
+				contarProvincia(Lista, "Limón");
+				system("read -rp $'Press [Enter] to continue...\n' key");
+				opcProv = 0;
+				break;
+			case 7:
+				system("clear");
+				contarProvincia(Lista, "Guanacaste");
+				system("read -rp $'Press [Enter] to continue...\n' key");
+				opcProv = 0;
+				break;
+			}
+			
 			opc = 0;
 		}
 		if (opc == 10){
