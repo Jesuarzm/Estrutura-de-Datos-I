@@ -179,7 +179,8 @@ void mostrarProvincia(lista cabeza, string prov){
 				while (auxUsr!=NULL)
 				{
 					if (auxUsr->provincia == prov){
-					cout << "Nombre: " << auxUsr->nombre << endl;
+					cout << "Cedula: " << auxUsr->cedula << endl;
+                    cout << "Nombre: " << auxUsr->nombre << endl;
                     cout << "Apellidos: " << auxUsr->primerApellido << " "<< auxUsr->segundoApellido << endl;
                     cout << "Telefonos: " << auxUsr->telefono << endl;
                     cout << "Correo: " << auxUsr->correo << endl;
@@ -211,6 +212,7 @@ void mostrarLetra(lista cabeza, char letra){
 				while (auxUsr!=NULL){
 
 					if (auxUsr->primerApellido[0]==letra){
+					cout << "Cedula: " << auxUsr->cedula << endl;
 					cout << "Nombre: " << auxUsr->nombre << endl;
                     cout << "Apellidos: " << auxUsr->primerApellido << " "<< auxUsr->segundoApellido << endl;
                     cout << "Telefonos: " << auxUsr->telefono << endl;
@@ -240,6 +242,7 @@ void buscarNumero(lista cabeza, int num){
 				while (auxUsr!=NULL){
 
 					if (auxUsr->celular==num){
+					cout << "Cedula: " << auxUsr->cedula << endl;
 					cout << "Nombre: " << auxUsr->nombre << endl;
                     cout << "Apellidos: " << auxUsr->primerApellido << " "<< auxUsr->segundoApellido << endl;
                     cout << "Telefonos: " << auxUsr->telefono << endl;
@@ -269,6 +272,7 @@ void buscarCedula(lista cabeza, int ced){
 				while (auxUsr!=NULL){
 
 					if (auxUsr->cedula==ced){
+					cout << "Cedula: " << auxUsr->cedula << endl;
 					cout << "Nombre: " << auxUsr->nombre << endl;
                     cout << "Apellidos: " << auxUsr->primerApellido << " "<< auxUsr->segundoApellido << endl;
                     cout << "Telefonos: " << auxUsr->telefono << endl;
@@ -452,16 +456,25 @@ int main(){
 			system("clear");
 			cout << "Ingrese el nuevo nombre" << endl;
 			cin >> nombre;
+			system("clear");
 			cout << "Ingrese el primer apellido" << endl;
 			cin >> apl1;
+			system("clear");
 			cout << "Ingrese el segundo apellido" << endl;
 			cin >> apl2;
+			system("clear");
 			cout << "Ingrese el telefono" << endl;
 			cin >> tel;
+			system("clear");
 			cout << "Ingrese el celular" << endl;
 			cin >> cel;
+			system("clear");
+			cout << "Ingrese el numero de cedula" << endl;
+			cin >> ced;
+			system("clear");
 			cout << "Ingrese el correo electronico" << endl;
 			cin >> mail;
+			system("clear");
 			cout << "Seleccione el numero de provincia" << endl;
 			cout << "1: San José" << endl;	
 			cout << "2: Alajuela" << endl;
@@ -470,9 +483,8 @@ int main(){
 			cout << "5: Puntarenas" << endl;
 			cout << "6: Limón" << endl;
 			cout << "7: Guanacaste" << endl;
-
-			
 			cin >> opcProv;
+			system("clear");
 			switch (opcProv){
 
 			case 1:
@@ -505,7 +517,21 @@ int main(){
 				break;
 			}
 			ingresarUsuario(Lista,nombre,apl1,apl2,tel, cel, ofi, ced, mail, prov);
+			cout << "Contacto regsitrado con exito!"<< endl;
+			prov = "";
+			nombre = "";
+			apl1 ="";
+			apl2 = "";
+			mail= "";
+			cel=0;
+			ofi=0;
+			tel=0;
+			ced=0;
+			num=0;
+			opc = 0;
+			opcProv=0;
 			system("read -rp $'Press [Enter] to continue...\n' key");
+
 			
 		}
 		if (opc == 2){
@@ -705,7 +731,7 @@ int main(){
 		{
 			estado = false;
 		}
-		if (!(opc > 0 and opc < 12)){
+		if (!(opc >= 0 and opc < 12)){
 			system("clear");
 			cout << "Ingresar una opcion valida:" << endl;
 			system("read -rp $'Press [Enter] to continue...\n' key");

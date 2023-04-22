@@ -1,25 +1,173 @@
 #include <iostream>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
-struct nodoProceso
+struct nodoArticulo
 {
-    string nombre;
-    int memoria;
-    nodoProceso *sig;
-    nodoProceso *ant;
+	string nombre;
+	int codigo;	
+	int cantidad;
+	double precio;
+	nodoArticulo *sig;
+	nodoArticulo *ant;
 };
+typedef struct nodoArticulo *lista;
 
-typedef struct nodoProceso *lista;
+nodoArticulo *crearNodo(string n,int cod,int can,
+                       double precio)
+{
+	nodoArticulo *aux = new (struct nodoArticulo);
+	aux->nombre=n;
+	aux->codigo=cod;
+	aux->cantidad=can;
+	aux->precio=precio;
+	aux->sig=NULL;
+	aux->ant=NULL;
+	
+	return aux;
+}
+ 
+void agregarFinal(lista &cabeza,string n,int cod,
+                  int ca,double pre)
+{
+	nodoArticulo *nuevo;
+	lista aux;
+	
+	nuevo=crearNodo(n,cod,ca,pre);
+	
+	if(cabeza==NULL)
+	{
+		cabeza=nuevo;
+		cabeza->sig=cabeza;
+		cabeza->ant=cabeza;
+	}
+	else
+	{
+		aux=cabeza;
+		while(aux->sig!=cabeza)
+		aux=aux->sig;
+		
+		aux->sig=nuevo;
+		nuevo->sig=cabeza;
+		nuevo->ant=aux;
+		cabeza->ant=nuevo;
+			
+	}
+}
 
-nodoProceso *crearNodo (string n, int m){
-    nodoProceso *aux = new (struct nodoProceso);
-    aux->nombre=n;
-    aux->memoria=m;
-    aux->sig=NULL;
-    aux->ant=NULL;
-    
-    return aux;
-};
+void borrarArticulo(lista &cabeza, int cod)
+{
+	lista aux;
+	
+	if(cabeza==NULL)
+	cout <<"Lista vacia"<<endl;
+	else
+	{
+		aux=cabeza;
+		if(aux->codigo==cod)
+		{
+			cabeza=aux->sig;
+			cabeza->ant=aux->ant;
+			aux->ant->sig=cabeza;
+			aux->sig=NULL;
+			aux->ant=NULL;
+			free(aux);
+			aux=cabeza;
+		}
+		else
+		{
+			aux=cabeza;
+			do
+			{
+				if(aux->codigo==cod && aux->sig!=cabeza)
+				{
+					aux->ant->sig=aux->sig;
+					aux->sig->ant=aux->ant;
+					aux->sig=NULL;
+					aux->ant=NULL;
+					free(aux);
+					aux=cabeza;
+					
+				}
+				else
+				if(aux->codigo==cod && aux->sig==cabeza)
+				{
+					cabeza->ant=aux->ant;
+					aux->ant->sig=cabeza;
+					aux->sig=NULL;
+					aux->ant=NULL;
+					free(aux);
+					aux=cabeza;
+					
+				}
+				
+				
+				aux=aux->sig;
+			}
+			while(aux!=cabeza);
+		}
+	}
+}
+
+void mostrarLista(lista cabeza)
+{
+	lista aux;
+	
+	if(cabeza==NULL)
+	cout <<"Lista vacia"<<endl;
+	else
+	{
+		aux=cabeza;
+		do
+		{
+			cout<<"Nombre:" <<aux->nombre<<endl;
+			cout<<"Codigo:" <<aux->codigo<<endl;
+			cout<<"Precio:" <<aux->precio<<endl;
+			cout<<"Cantidad:" <<aux->cantidad<<endl;
+			cout <<"******************************"<<endl;
+			aux=aux->sig;
+		}
+		while(aux!=cabeza);
+	}
+}
+
+void modificarLista(lista cabeza,int cod,int can)
+{
+	lista aux;
+	
+	if(cabeza==NULL)
+	cout <<"Lista vacia"<<endl;
+	else
+	{
+		aux=cabeza;
+		do
+		{
+			if(aux->codigo==cod)
+			aux->cantidad=can;
+			
+			aux=aux->sig;
+		}
+		while(aux!=cabeza);
+	}
+}
+
+int main()
+{
+	lista LDC=NULL;
+	agregarFinal(LDC,"coca cola",101,4,1000);
+	agregarFinal(LDC,"fanta",102,4,1000);
+	agregarFinal(LDC,"pepsi",103,4,1000);
+	mostrarLista(LDC);
+	system("pause");
+	borrarArticulo(LDC,103);
+	system("cls");
+	mostrarLista(LDC);
+	system("pause");
+	modificarLista(LDC,102,8);
+	system("cls");
+	mostrarLista(LDC);
+	system("pause");
+
+}
