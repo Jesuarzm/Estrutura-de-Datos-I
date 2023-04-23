@@ -105,6 +105,46 @@ void borrarArticulo(lista &cabeza, int cod)
 		}
 	}
 }
+bool verificarExistencia(lista cabeza,int cod){
+	lista aux;
+	
+	if(cabeza==NULL)
+	cout <<"Lista vacia"<<endl;
+	else
+	{
+		aux=cabeza;
+		do
+		{
+			if(aux->codigoProduto==cod){
+				return true;
+			}
+			
+			aux=aux->sig;
+		}
+		while(aux!=cabeza);	
+	}
+	return false;
+}
+void modificarArticulo(lista cabeza,int cod,int can, double pre){
+	lista aux;
+	
+	if(cabeza==NULL)
+	cout <<"Lista vacia"<<endl;
+	else
+	{
+		aux=cabeza;
+		do
+		{
+			if(aux->codigoProduto==cod){
+				aux->cantidad=can;
+				aux->precio=pre;
+			}
+			
+			aux=aux->sig;
+		}
+		while(aux!=cabeza);	
+	}
+}
 void mostrarLista(lista cabeza)
 {
 	lista aux;
@@ -116,10 +156,58 @@ void mostrarLista(lista cabeza)
 		aux=cabeza;
 		do
 		{
+
+			cout <<"******************************"<<endl;
 			cout<<"Nombre:" <<aux->nombreArticulo<<endl;
 			cout<<"Codigo:" <<aux->codigoProduto<<endl;
 			cout<<"Precio:" <<aux->precio<<endl;
 			cout<<"Cantidad:" <<aux->cantidad<<endl;
+			cout <<"******************************"<<endl;
+			aux=aux->sig;
+		}
+		while(aux!=cabeza);
+	}
+}
+void mostrarCodigo(lista cabeza, int codBuscar)
+{
+	lista aux;
+	
+	if(cabeza==NULL)
+	cout <<"Lista vacia"<<endl;
+	else
+	{
+		aux=cabeza;
+		do
+		{
+			if (aux->codigoProduto==codBuscar){
+
+				cout <<"******************************"<<endl;
+				cout<<"Nombre:" <<aux->nombreArticulo<<endl;
+				cout<<"Codigo:" <<aux->codigoProduto<<endl;
+				cout<<"Precio:" <<aux->precio<<endl;
+				cout<<"Cantidad:" <<aux->cantidad<<endl;
+				cout <<"******************************"<<endl;
+			}
+			aux=aux->sig;
+		}
+		while(aux!=cabeza);
+	}
+}
+void mostrarPrecioTotal(lista cabeza){
+	lista aux;
+	
+	if(cabeza==NULL)
+	cout <<"Lista vacia"<<endl;
+	else
+	{
+		aux=cabeza;
+		do
+		{
+
+			cout <<"******************************"<<endl;
+			cout<<"Nombre:" <<aux->nombreArticulo<<endl;
+			cout<<"Codigo:" <<aux->codigoProduto<<endl;
+			cout<<"Valor total:" <<aux->precio * aux->cantidad<<endl;
 			cout <<"******************************"<<endl;
 			aux=aux->sig;
 		}
@@ -164,8 +252,8 @@ int main(){
         
         cin >> opc; 
 
-        if (opc == 1)
-        {
+        if (opc == 1){
+
             system("clear");
 			cout << "Ingrese la descripcion del articulo " << endl;
 			cin >> nomA;
@@ -180,28 +268,77 @@ int main(){
 			cin >> preA;
 			agregarFinal(miLista, nomA, codA, cantA, preA);
 			system("read -rp $'Press [Enter] to continue...\n' key");
+        
+		}
+        if (opc == 2){
+
+            system("clear");
+			cout << "Ingrese el codigo del producto a borrar: " << endl;
+			cin >> codA;
+            borrarArticulo(miLista, codA);
+			system("clear");
+			cout << "Producto eliminado correctamente!" << endl;
+            system("read -rp $'Press [Enter] to continue...\n' key");
+
         }
-        if (opc == 2)
-        {
-            
-        }
-        if (opc == 3)
-        {
+        if (opc == 3){
+
+            system("clear");
+
+			cout << "Ingresar el codigo del procuto a modificar: " << endl;
+			cin >> codA;
+			if (verificarExistencia(miLista, codA)==true){
+				system("clear");
+				cout << "Ingrese la nueva cantidad de producto" << endl;
+				cin >> cantA;
+				system("clear");
+				cout << "Ingrese el nuevo precio del producto" << endl;
+				cin >> preA;
+	            system("clear");
+				modificarArticulo(miLista, codA, cantA, preA);
+				cout << "Producto modificado con exito!" << endl;
+				system("read -rp $'Press [Enter] to continue...\n' key");
+			}else{
+			cout << "Prodcuto inexistente, intente otra vez..." << endl;
+			system("read -rp $'Press [Enter] to continue...\n' key");
+			}
             
         }
         if (opc == 4){
-            system("clear");
+        
+		    system("clear");
             mostrarLista(miLista);
             system("read -rp $'Press [Enter] to continue...\n' key");
 			
         }
-        
-        
-        if (!(opc >= 0 and opc <= 7)){
+        if (opc == 5){
+			
+			system("clear");
+			cout << "Ingrese el codigo del producto a buscar: " << endl;
+			cin >> codA;
+            mostrarCodigo(miLista, codA);
+            system("read -rp $'Press [Enter] to continue...\n' key");
+
+		}
+		if (opc == 6)
+		{
+			system("clear");
+            mostrarPrecioTotal(miLista);
+            system("read -rp $'Press [Enter] to continue...\n' key");
+		}
+		
+        if (opc == 7){
+
+			estado = false;
+		
+		}
+        if (!(opc >= 0 and opc < 8)){
+		
 			system("clear");
 			cout << "Ingresar una opcion valida:" << endl;
 			system("read -rp $'Press [Enter] to continue...\n' key");
 			opc = 0;
+		
 		}
               
     }while (estado == true);
